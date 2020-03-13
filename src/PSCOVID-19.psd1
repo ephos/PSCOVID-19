@@ -19,13 +19,13 @@ Author = 'Rob (Ephos) Pleau'
 CompanyName = 'Ephos'
 
 # Copyright statement for this module
-Copyright = '(c) 2020 Rob Pleau. All rights reserved.'
+Copyright = '(c)2020 Rob (Ephos) Pleau. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Module used to parse CSV data hosted in the Johns Hopkins CSSE Github.  '
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '6.0.0'
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -90,10 +90,10 @@ PrivateData = @{
         Tags = @('COVID', 'COVID-19', 'Johns Hopkins')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/ephos/PSCOVID-19/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/ephos/PSCOVID-19'
 
         # A URL to an icon representing this module.
         # IconUri = ''

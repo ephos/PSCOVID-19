@@ -10,6 +10,13 @@ function Start-Covid19Tracker {
     process {
         do {
 
+            # I don't like this but I am going to do it since a lot of ya'll are living in the PS stone age...
+            if ($PSVersionTable.PSVersion.Major -ge 6) {
+                $esc = "`e"
+            } else {
+                $esc = [Char](0x1b)
+            }
+
             $ProgressPreference = 'SilentlyContinue'
             $cd = Get-COVID19Data
 
@@ -21,9 +28,9 @@ function Start-Covid19Tracker {
                         @{N='CountryOrRegion';E={$_.CountryOrRegion}}
                         @{N='ProvinceOrState';E={$_.ProvinceOrState}}
                         @{N='LastUpdate';E={$_.LastUpdate}}
-                        @{N='Confirmed';E={ "`e[38;2;255;128;0m" + $_.Confirmed}}
-                        @{N='Deaths';E={ "`e[38;2;236;23;23m" + $_.Deaths}}
-                        @{N='Recovered';E={ "`e[38;2;72;225;22m" + $_.Recovered}}
+                        @{N='Confirmed';E={ "$esc[38;2;255;128;0m" + $_.Confirmed}}
+                        @{N='Deaths';E={ "$esc[38;2;236;23;23m" + $_.Deaths}}
+                        @{N='Recovered';E={ "$esc[38;2;72;225;22m" + $_.Recovered}}
                         @{N='Latitude';E={$_.Latitude}}
                         @{N='Longitude';E={$_.Longitude}}
                     )
@@ -46,9 +53,9 @@ function Start-Covid19Tracker {
                 @{N='CountryOrRegion';E={$_.CountryOrRegion}}
                 @{N='ProvinceOrState';E={$_.ProvinceOrState}}
                 @{N='LastUpdate';E={$_.LastUpdate}}
-                @{N='Confirmed';E={ "`e[38;2;255;128;0m" + $_.Confirmed}}
-                @{N='Deaths';E={ "`e[38;2;236;23;23m" + $_.Deaths}}
-                @{N='Recovered';E={ "`e[38;2;72;225;22m" + $_.Recovered}}
+                @{N='Confirmed';E={ "$esc[38;2;255;128;0m" + $_.Confirmed}}
+                @{N='Deaths';E={ "$esc[38;2;236;23;23m" + $_.Deaths}}
+                @{N='Recovered';E={ "$esc[38;2;72;225;22m" + $_.Recovered}}
                 @{N='Latitude';E={$_.Latitude}}
                 @{N='Longitude';E={$_.Longitude}}
             )
