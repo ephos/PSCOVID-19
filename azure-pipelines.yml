@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
     paths:
       exclude:
@@ -19,41 +14,48 @@ pool:
   vmImage: 'windows-latest'
 
 jobs:
-  - job: PullRequest
-    workspace:
-      clean: all
+  # - job: PullRequest
+  #   workspace:
+  #     clean: all
       
-    steps:
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "$(Build.SourcesDirectory)"
-          Write-Host "$(Build.ArtifactStagingDirectory)"
-          Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
-        pwsh: true
-    - task: Pester@8
-      displayName: 'Run Pester Tests'
-      inputs:
-        scriptFolder: '$(Build.SourcesDirectory)\tests\*'
-        resultsFile: '$(Build.ArtifactStagingDirectory)\Test-Pester.XML'
-        run32Bit: False
-    - task: PublishTestResults@2
-      displayName: 'Publish Test Results'
-      inputs:
-        testResultsFormat: 'NUnit'
-        testResultsFiles: '**/TEST-*.xml'
-        searchFolder: '$(Build.ArtifactStagingDirectory)'
-      condition: succeededOrFailed()
+  #   steps:
+  #   - task: PowerShell@2
+  #     inputs:
+  #       targetType: 'inline'
+  #       script: |
+  #         Write-Host "$(Build.SourcesDirectory)"
+  #         Write-Host "$(Build.ArtifactStagingDirectory)"
+  #         Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
+  #       pwsh: true
+  #   - task: Pester@8
+  #     displayName: 'Run Pester Tests'
+  #     inputs:
+  #       scriptFolder: '$(Build.SourcesDirectory)\tests\*'
+  #       resultsFile: '$(Build.ArtifactStagingDirectory)\Test-Pester.XML'
+  #       run32Bit: False
+  #   - task: PublishTestResults@2
+  #     displayName: 'Publish Test Results'
+  #     inputs:
+  #       testResultsFormat: 'NUnit'
+  #       testResultsFiles: '**/TEST-*.xml'
+  #       searchFolder: '$(Build.ArtifactStagingDirectory)'
+  #     condition: succeededOrFailed()
   
   - job: ContinuousIntegration 
-    dependsOn: PullRequest
-    # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    condition: and(succeeded('PullRequest'), ne(variables['Build.Reason'], 'PullRequest'))
+    # dependsOn: PullRequest
+    # condition: and(succeeded('PullRequest'), ne(variables['Build.Reason'], 'PullRequest'))
     workspace:
         clean: all
 
     steps:
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "$(Build.SourcesDirectory)"
+            Write-Host "$(Build.ArtifactStagingDirectory)"
+            Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
+          pwsh: true
       - task: CopyFiles@2
         displayName: 'Copy Module Source to Staging'
         inputs:
