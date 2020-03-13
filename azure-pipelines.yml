@@ -22,7 +22,7 @@ jobs:
   - job: PullRequest
     workspace:
       clean: all
-      # $(System.DefaultWorkingDirectory)
+      
     steps:
     - task: PowerShell@2
       inputs:
@@ -57,7 +57,7 @@ jobs:
       - task: CopyFiles@2
         displayName: 'Copy Module Source to Staging'
         inputs:
-          SourceFolder: $(Build.SourcesDirectory)\src\'
+          SourceFolder: $(Build.SourcesDirectory)\$(ModuleName)\src\'
           Contents: '**'
           TargetFolder: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
           CleanTargetFolder: true
