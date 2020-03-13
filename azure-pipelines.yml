@@ -37,7 +37,7 @@ jobs:
       displayName: 'Run Pester Tests'
       inputs:
         scriptFolder: '$(Build.SourcesDirectory)\tests\*'
-        resultsFile: 'Test-Pester.XML'
+        resultsFile: '$(Build.ArtifactStagingDirectory)\Test-Pester.XML'
         run32Bit: False
     - task: PublishTestResults@2
       displayName: 'Publish Test Results'
