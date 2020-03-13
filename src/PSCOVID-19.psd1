@@ -87,7 +87,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('COVID', 'COVID-19', 'Johns Hopkins')
+        Tags = @('COVID', 'COVID-19', 'JohnsHopkins')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/ephos/PSCOVID-19/blob/master/LICENSE'
