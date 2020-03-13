@@ -2,6 +2,9 @@ trigger:
     paths:
       exclude:
         - azure-pipelines.yml
+        - .gitignore
+        - LICENSE
+        - ReadMe.md
     branches:
       include:
         - master
@@ -19,14 +22,6 @@ jobs:
       clean: all
       
     steps:
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "$(Build.SourcesDirectory)"
-          Write-Host "$(Build.ArtifactStagingDirectory)"
-          Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
-        pwsh: true
     - task: Pester@8
       displayName: 'Run Pester Tests'
       inputs:
@@ -48,14 +43,6 @@ jobs:
         clean: all
 
     steps:
-      - task: PowerShell@2
-        inputs:
-          targetType: 'inline'
-          script: |
-            Write-Host "$(Build.SourcesDirectory)"
-            Write-Host "$(Build.ArtifactStagingDirectory)"
-            Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
-          pwsh: true
       - task: CopyFiles@2
         displayName: 'Copy Module Source to Staging'
         inputs:
