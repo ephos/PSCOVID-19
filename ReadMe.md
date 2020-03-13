@@ -29,7 +29,7 @@ $data = GetGet-COVID19Data
 $data | Where-Object -FilterScript {$_.CountryOrRegion -eq 'US'} | Measure-Object -Property Confirmed -Sum
 ```
 
-This is more of a personalized function at the moment.  You can start the "tracker" which updates periodically against the data.
+You can start the "tracker" which updates periodically against the data.  _The data refresh is always dependent on the data that Johns Hopkins is aggregating._
 
 ```powershell
 # Get all United States cases ('ctrl+c' to exit back to console)
@@ -37,7 +37,6 @@ Start-Covid19Tracker -CountryOrRegion US
 ```
 
 Below is an image of the output using China as an example.
-
 ![example1](images/example1.png)
 
 ## Links
