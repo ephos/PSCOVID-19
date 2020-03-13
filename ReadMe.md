@@ -1,5 +1,7 @@
 # ReadMe
 
+[![Build Status](https://ephos.visualstudio.com/PSCOVID-19/_apis/build/status/ephos.PSCOVID-19?branchName=master)](https://ephos.visualstudio.com/PSCOVID-19/_build/latest?definitionId=3&branchName=master)
+
 ## PSCOVID-19
 
 This was a project born out of wanting to just write some code as more cases of COVID-19 started popping up throughout the United States.
