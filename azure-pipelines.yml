@@ -24,7 +24,13 @@ jobs:
       clean: all
       # $(System.DefaultWorkingDirectory)
     steps:
-    
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "$(Build.SourcesDirectory)"
+          Write-Host "$(Build.ArtifactStagingDirectory)"
+        pwsh: true
     - task: Pester@8
       displayName: 'Run Pester Tests'
       inputs:
