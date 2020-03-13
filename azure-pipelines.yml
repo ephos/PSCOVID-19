@@ -30,6 +30,7 @@ jobs:
         script: |
           Write-Host "$(Build.SourcesDirectory)"
           Write-Host "$(Build.ArtifactStagingDirectory)"
+          Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
         pwsh: true
     - task: Pester@8
       displayName: 'Run Pester Tests'
