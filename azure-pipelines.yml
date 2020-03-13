@@ -16,7 +16,7 @@ variables:
       value: 'PSCOVID-19'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 jobs:
   - job: PullRequest
