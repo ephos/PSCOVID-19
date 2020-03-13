@@ -5,6 +5,7 @@ trigger:
         - .gitignore
         - LICENSE
         - ReadMe.md
+        - images/*
     branches:
       include:
         - master

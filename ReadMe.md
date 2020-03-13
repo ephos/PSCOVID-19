@@ -33,8 +33,12 @@ This is more of a personalized function at the moment.  You can start the "track
 
 ```powershell
 # Get all United States cases ('ctrl+c' to exit back to console)
-Start-Covid19Tracker
+Start-Covid19Tracker -CountryOrRegion US
 ```
+
+Below is an image of the output using China as an example.
+
+![example1](images/example1.png)
 
 ## Links
 
