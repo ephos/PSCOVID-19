@@ -31,6 +31,7 @@ jobs:
           Write-Host "$(Build.SourcesDirectory)"
           Write-Host "$(Build.ArtifactStagingDirectory)"
           Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
+          Get-ChildItem -Path $(Build.SourcesDirectory)\tests\*
         pwsh: true
     - task: Pester@8
       displayName: 'Run Pester Tests'
@@ -54,8 +55,9 @@ jobs:
 
     steps:
       - task: CopyFiles@2
+        displayName: 'Copy Module Source to Staging'
         inputs:
-          SourceFolder: '''$(Build.SourcesDirectory)src\'''
+          SourceFolder: $(Build.SourcesDirectory)\src\'
           Contents: '**'
           TargetFolder: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
           CleanTargetFolder: true
