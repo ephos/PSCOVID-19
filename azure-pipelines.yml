@@ -16,7 +16,7 @@ variables:
       value: 'PSCOVID-19'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 jobs:
   - job: PullRequest
@@ -24,18 +24,26 @@ jobs:
       clean: all
       # $(System.DefaultWorkingDirectory)
     steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "$(Build.SourcesDirectory)"
+          Write-Host "$(Build.ArtifactStagingDirectory)"
+          Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)
+        pwsh: true
     - task: Pester@8
       displayName: 'Run Pester Tests'
       inputs:
-        scriptFolder: '$(Build.SourcesDirectory)tests\*'
-        resultsFile: 'Test-Pester.XML'
+        scriptFolder: '$(Build.SourcesDirectory)\tests\*'
+        resultsFile: '$(Build.ArtifactStagingDirectory)\Test-Pester.XML'
         run32Bit: False
     - task: PublishTestResults@2
       displayName: 'Publish Test Results'
       inputs:
         testResultsFormat: 'NUnit'
         testResultsFiles: '**/TEST-*.xml'
-        searchFolder: '$(Build.StagingDirectory)'
+        searchFolder: '$(Build.ArtifactStagingDirectory)'
       condition: succeededOrFailed()
   
   - job: ContinuousIntegration 
@@ -46,10 +54,11 @@ jobs:
 
     steps:
       - task: CopyFiles@2
+        displayName: 'Copy Module Source to Staging'
         inputs:
-          SourceFolder: '''$(Build.SourcesDirectory)src\'''
+          SourceFolder: $(Build.SourcesDirectory)\src\'
           Contents: '**'
-          TargetFolder: '$(Build.StagingDirectory)\$(ModuleName)'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
           CleanTargetFolder: true
           OverWrite: true
       - task: PublishBuildArtifacts@1
