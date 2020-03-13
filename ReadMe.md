@@ -6,6 +6,34 @@ This was a project born out of wanting to just write some code as more cases of 
 
 This uses the same CSV data files in the Johns Hopkins CSSE [GitHub Repository](https://github.com/CSSEGISandData/COVID-19).  This is a side project I just wanted to write to tinker with data, <span style="color:blue">__**I am in NO WAY affiliated with any health organization or Johns Hopkins**__</span>!
 
+## Install and Usage
+
+Installing the module.
+
+```powershell
+# Install module.
+Install-Module -Name PSCOVID-19 -Scope CurrentUser
+```
+
+As of now the module only has limited functionality.
+
+If you want to get all of the data to manipulate it yourself.  Use `Get-COVID19Data`, it will return a list of `[Covid]` objects that you can manipulate with built-in PowerShell Cmdlets.
+
+```powershell
+# Get the data
+$data = GetGet-COVID19Data
+
+# Get all confirmed cases by US
+$data | Where-Object -FilterScript {$_.CountryOrRegion -eq 'US'} | Measure-Object -Property Confirmed -Sum
+```
+
+This is more of a personalized function at the moment.  You can start the "tracker" which updates periodically against the data.
+
+```powershell
+# Get all United States cases ('ctrl+c' to exit back to console)
+Start-Covid19Tracker
+```
+
 ## Links
 
 - [Johns Hopkins GitHub Repository](https://github.com/CSSEGISandData/COVID-19)
