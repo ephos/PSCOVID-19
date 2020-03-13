@@ -24,10 +24,11 @@ jobs:
       clean: all
       # $(System.DefaultWorkingDirectory)
     steps:
+    
     - task: Pester@8
       displayName: 'Run Pester Tests'
       inputs:
-        scriptFolder: '$(Build.SourcesDirectory)tests\*'
+        scriptFolder: '$(Build.SourcesDirectory)\tests\*'
         resultsFile: 'Test-Pester.XML'
         run32Bit: False
     - task: PublishTestResults@2
@@ -35,7 +36,7 @@ jobs:
       inputs:
         testResultsFormat: 'NUnit'
         testResultsFiles: '**/TEST-*.xml'
-        searchFolder: '$(Build.StagingDirectory)'
+        searchFolder: '$(Build.ArtifactStagingDirectory)'
       condition: succeededOrFailed()
   
   - job: ContinuousIntegration 
@@ -49,7 +50,7 @@ jobs:
         inputs:
           SourceFolder: '''$(Build.SourcesDirectory)src\'''
           Contents: '**'
-          TargetFolder: '$(Build.StagingDirectory)\$(ModuleName)'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
           CleanTargetFolder: true
           OverWrite: true
       - task: PublishBuildArtifacts@1
