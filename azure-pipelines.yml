@@ -4,16 +4,57 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+    paths:
+      exclude:
+        - azure-pipelines.yml
+    branches:
+      include:
+        - master
+
+variables:
+    - name: ModuleName
+      value: 'PSCOVID-19'
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+jobs:
+  - job: PullRequest
+    workspace:
+      clean: all
+      # $(System.DefaultWorkingDirectory)
+    steps:
+    - task: Pester@8
+      displayName: 'Run Pester Tests'
+      inputs:
+        scriptFolder: '$(Build.SourcesDirectory)tests\*'
+        resultsFile: 'Test-Pester.XML'
+        run32Bit: False
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Results'
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '**/TEST-*.xml'
+        searchFolder: '$(Build.StagingDirectory)'
+      condition: succeededOrFailed()
+  
+  - job: ContinuousIntegration 
+    dependsOn: PullRequest
+    condition: and(succeeded('PR'), ne(variables['Build.Reason'], 'PullRequest'))
+    workspace:
+        clean: all
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    steps:
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: '''$(Build.SourcesDirectory)src\'''
+          Contents: '**'
+          TargetFolder: '$(Build.StagingDirectory)\$(ModuleName)'
+          CleanTargetFolder: true
+          OverWrite: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
+          ArtifactName: '$(ModuleName)'
+          publishLocation: 'Container'
+
