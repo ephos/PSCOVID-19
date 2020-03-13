@@ -57,7 +57,7 @@ jobs:
       - task: CopyFiles@2
         displayName: 'Copy Module Source to Staging'
         inputs:
-          SourceFolder: $(Build.SourcesDirectory)\$(ModuleName)\src\'
+          SourceFolder: '$(Build.SourcesDirectory)\$(ModuleName)\src\'
           Contents: '**'
           TargetFolder: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
           CleanTargetFolder: true
@@ -67,4 +67,8 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
           ArtifactName: '$(ModuleName)'
           publishLocation: 'Container'
+      - task: PSGalleryPackager@0
+        inputs:
+          apiKey: '$(PSGallery)'
+          path: '$(Build.ArtifactStagingDirectory)\$(ModuleName)'
 
