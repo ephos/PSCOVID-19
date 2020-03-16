@@ -10,9 +10,7 @@ class Covid {
     [double] $Longitude
 
     # Empty constructor
-    Covid () {
-
-    }
+    Covid () {}
 
     # Full constructor
     Covid (
