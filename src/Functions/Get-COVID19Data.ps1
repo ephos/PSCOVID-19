@@ -32,9 +32,8 @@ function Get-COVID19Data {
         Write-Error -ErrorAction Stop -Message "Could not retreive COVID-19 CICD data from Github, error was:`n`t$_"
     }
 
-    # $outPut = [System.Collections.ArrayList]::new()
-    $output = [System.Collections.Generic.List[Covid]]::new()
 
+    $output = New-Object -TypeName System.Collections.Generic.List[Covid]
     foreach ($cd in $covidData) {
         $output.Add([Covid]::new(
                 $cd.'Country/Region',
