@@ -36,9 +36,9 @@ function Start-Covid19Tracker {
                 @{N='CountryOrRegion';E={$_.CountryOrRegion}}
                 @{N='ProvinceOrState';E={$_.ProvinceOrState}}
                 @{N='LastUpdate';E={$_.LastUpdate}}
-                @{N='Confirmed';E={ "$esc[38;2;255;128;0m" + $_.Confirmed}}
-                @{N='Deaths';E={ "$esc[38;2;236;23;23m" + $_.Deaths}}
-                @{N='Recovered';E={ "$esc[38;2;72;225;22m" + $_.Recovered}}
+                @{N='Confirmed';E={ "$esc[38;2;255;128;0m" + $_.Confirmed + "$esc[0m"}}
+                @{N='Deaths';E={ "$esc[38;2;236;23;23m" + $_.Deaths + "$esc[0m"}}
+                @{N='Recovered';E={ "$esc[38;2;72;225;22m" + $_.Recovered + "$esc[0m"}}
                 @{N='Latitude';E={$_.Latitude}}
                 @{N='Longitude';E={$_.Longitude}}
             )
