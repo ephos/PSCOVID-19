@@ -22,11 +22,24 @@ As of now the module only has limited functionality.
 If you want to get all of the data to manipulate it yourself.  Use `Get-COVID19Data`, it will return a list of `[Covid]` objects that you can manipulate with built-in PowerShell Cmdlets.
 
 ```powershell
-# Get the data
-$data = GetGet-COVID19Data
+# Gather the latest data
+$covidData = Get-COVID19Data
 
-# Get all confirmed cases by US
-$data | Where-Object -FilterScript {$_.CountryOrRegion -eq 'US'} | Measure-Object -Property Confirmed -Sum
+# Filter the data to get all US cases and measure the total amount of confirmed cases across all of the data
+$covidData | Where-Object {$_.CountryOrRegion -eq 'US'} | Measure-Object -Property Confirmed -Sum
+
+# For you other New Englanders, Get all the New England states, sort by 'confirmed' cases and then format it out as a table
+$covidData | Where-Object {$_.CountryOrRegion -eq 'US'} | Where-Object {
+    $_.ProvinceOrState -eq 'Massachusetts' -or
+    $_.ProvinceOrState -eq 'Rhode Island' -or
+    $_.ProvinceOrState -eq 'Connecticut' -or
+    $_.ProvinceOrState -eq 'New Hampshire' -or
+    $_.ProvinceOrState -eq 'Vermont' -or
+    $_.ProvinceOrState -eq 'Maine'
+} | Sort-Object -Property Confirmed -Descending | Format-Table -AutoSize
+
+# Get data for Italy
+$covidData | Where-Object {$_.CountryOrRegion -eq 'Italy'}  | Format-Table -AutoSize
 ```
 
 You can start the "tracker" which updates periodically against the data.  _The data refresh is always dependent on the data that Johns Hopkins is aggregating._
