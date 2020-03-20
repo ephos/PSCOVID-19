@@ -3,7 +3,7 @@ function Start-Covid19Tracker {
     param(
         # Update interval in minutes
         [Parameter(Mandatory=$false)]
-        [ValidateRange(30,60)]
+        [ValidateRange(5,60)]
         [int]
         $UpdateInteraval = 60,
         # CountryOrRegion Filter
@@ -14,6 +14,7 @@ function Start-Covid19Tracker {
     process {
 
         $ProgressPreference = 'SilentlyContinue'
+        $timeSpan = New-TimeSpan -Minutes $UpdateInteraval
 
         # I don't like this but I am going to do it since a lot of ya'll are living in the PS 5.1 stone age...
         if ($PSVersionTable.PSVersion.Major -ge 6) {
@@ -42,9 +43,11 @@ function Start-Covid19Tracker {
                 @{N='Latitude';E={$_.Latitude}}
                 @{N='Longitude';E={$_.Longitude}}
             )
-            Write-Output -InputObject "Refreshing every $esc[38;2;72;225;22m$UpdateInteraval$esc[0m seconds.  Last update was: $esc[38;2;72;225;22m$([DateTime]::now)$esc[0m`nPress $esc[38;2;252;223;0mctrl+c$esc[0m to exit..."
+            Write-Output -InputObject "Refreshing every $esc[38;2;72;225;22m$UpdateInteraval$esc[0m minutes.  Last update was: $esc[38;2;72;225;22m$([DateTime]::now)$esc[0m`nPress $esc[38;2;252;223;0mctrl+c$esc[0m to exit..."
             
-            Start-Sleep -Seconds $UpdateInteraval
+            Start-Sleep -Seconds $timeSpan.TotalSeconds
         }
+
+        $ProgressPreference = 'Continue'
     }
 }

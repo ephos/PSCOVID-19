@@ -2,6 +2,8 @@ function Get-COVID19Data {
     [CmdletBinding()]
     param ()
 
+    $ProgressPreference = 'SilentlyContinue'
+
     $invokeWebRequestParams = @{
         ErrorAction = 'Stop'
     }
@@ -49,4 +51,6 @@ function Get-COVID19Data {
     }
 
     Write-Output -InputObject $output
+
+    $ProgressPreference = 'Continue'
 }
