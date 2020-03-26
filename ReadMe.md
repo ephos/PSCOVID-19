@@ -52,7 +52,7 @@ Format-Covid19Table -CountryOrRegion US
 Format-Covid19Table -CountryOrRegion US -ProvinceOrState 'Massachusetts'
 ```
 
-Below is an image of the output using China as an example.
+Below is an image of the output using the US and Massachusetts as an example.
 ![example1](images/example1.png)
 
 ## Links
