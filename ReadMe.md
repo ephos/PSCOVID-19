@@ -40,9 +40,12 @@ $covidData | Where-Object {$_.CountryOrRegion -eq 'US'} | Where-Object {
 
 # Get data for Italy
 $covidData | Where-Object {$_.CountryOrRegion -eq 'Italy'}  | Format-Table -AutoSize
+
+# Use Measure-Object to get stats for a given area
+$covidData | Where-Object {$_.ProvinceOrState -eq 'New York'}  | Measure-Object -Property Confirmed -AllStats
 ```
 
-You can start the "tracker" which updates periodically against the data.  _The data refresh is always dependent on the data that Johns Hopkins is aggregating._
+As the data only tends to update once daily this originally was a tracker in pre 2.* versions.  Now `Format-Covid19Table` simply prints the data with a pretty table that has colors!
 
 ```powershell
 # Get all United States cases
@@ -52,7 +55,7 @@ Format-Covid19Table -CountryOrRegion US
 Format-Covid19Table -CountryOrRegion US -ProvinceOrState 'Massachusetts'
 ```
 
-Below is an image of the output using China as an example.
+Below is an image of the output using the US and Massachusetts as an example.
 ![example1](images/example1.png)
 
 ## Links
