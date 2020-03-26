@@ -20,4 +20,22 @@ $scriptBlock = {
     $output = $argData | Select-Object -ExpandProperty CountryOrRegion -Unique | Sort-Object
     $output | ForEach-Object {$_}
 }
-Register-ArgumentCompleter -CommandName Start-Covid19Tracker -ParameterName CountryOrRegion -ScriptBlock $scriptBlock
+Register-ArgumentCompleter -CommandName Format-Covid19Table -ParameterName CountryOrRegion -ScriptBlock $scriptBlock
+
+$scriptBlock = {
+    param($commandName, $parameterName, $stringMatch)
+
+    $output = $argData | Select-Object -ExpandProperty ProvinceOrState -Unique | Sort-Object
+    $output | ForEach-Object {$_}
+}
+Register-ArgumentCompleter -CommandName Format-Covid19Table -ParameterName ProvinceOrState -ScriptBlock $scriptBlock
+
+New-Alias -Name Start-Covid19Tracker -Value Format-Covid19Table -Force
+
+# $scriptBlock = {
+#     param($commandName, $parameterName, $stringMatch)
+
+#     $output = $argData | Select-Object -ExpandProperty CountyOrDistrict -Unique | Sort-Object
+#     $output | ForEach-Object {$_}
+# }
+# Register-ArgumentCompleter -CommandName Start-Covid19Tracker -ParameterName CountyOrDistrict -ScriptBlock $scriptBlock
