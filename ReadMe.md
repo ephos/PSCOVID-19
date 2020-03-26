@@ -42,7 +42,7 @@ $covidData | Where-Object {$_.CountryOrRegion -eq 'US'} | Where-Object {
 $covidData | Where-Object {$_.CountryOrRegion -eq 'Italy'}  | Format-Table -AutoSize
 ```
 
-You can start the "tracker" which updates periodically against the data.  _The data refresh is always dependent on the data that Johns Hopkins is aggregating._
+As the data only tends to update once daily this originally was a tracker in pre 2.* versions.  Now `Format-Covid19Table` simply prints the data with a pretty table that has colors!
 
 ```powershell
 # Get all United States cases
