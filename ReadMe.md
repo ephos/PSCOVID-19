@@ -45,8 +45,11 @@ $covidData | Where-Object {$_.CountryOrRegion -eq 'Italy'}  | Format-Table -Auto
 You can start the "tracker" which updates periodically against the data.  _The data refresh is always dependent on the data that Johns Hopkins is aggregating._
 
 ```powershell
-# Get all United States cases ('ctrl+c' to exit back to console)
-Start-Covid19Tracker -CountryOrRegion US
+# Get all United States cases
+Format-Covid19Table -CountryOrRegion US
+
+# Get all the cases for a specific state
+Format-Covid19Table -CountryOrRegion US -ProvinceOrState 'Massachusetts'
 ```
 
 Below is an image of the output using China as an example.
