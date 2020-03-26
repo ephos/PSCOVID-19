@@ -40,6 +40,9 @@ $covidData | Where-Object {$_.CountryOrRegion -eq 'US'} | Where-Object {
 
 # Get data for Italy
 $covidData | Where-Object {$_.CountryOrRegion -eq 'Italy'}  | Format-Table -AutoSize
+
+# Use Measure-Object to get stats for a given area
+$covidData | Where-Object {$_.ProvinceOrState -eq 'New York'}  | Measure-Object -Property Confirmed -AllStats
 ```
 
 As the data only tends to update once daily this originally was a tracker in pre 2.* versions.  Now `Format-Covid19Table` simply prints the data with a pretty table that has colors!
