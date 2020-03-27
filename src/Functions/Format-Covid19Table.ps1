@@ -22,6 +22,7 @@ function Format-Covid19Table {
         }
 
         if ($PSBoundParameters.ContainsKey('CountryOrRegion')) {
+
             # Country or region specified
             $data = (Get-COVID19Data).where({$_.CountryOrRegion -eq "$CountryOrRegion"})
 
