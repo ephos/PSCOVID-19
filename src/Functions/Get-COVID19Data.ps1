@@ -36,11 +36,11 @@ function Get-COVID19Data {
 
 
     $output = New-Object -TypeName System.Collections.Generic.List[Covid]
+
     foreach ($cd in $covidData) {
 
-        $cd.'Last Update'
-
         $listItem = [Covid]::new()
+
         $listItem.CountryOrRegion = $cd.Country_Region
         $listItem.ProvinceOrState = $cd.Province_State
         $listItem.CountyOrDistrict = $cd.Admin2
@@ -51,20 +51,10 @@ function Get-COVID19Data {
         $listItem.Active = $cd.Active
         $listItem.Latitude = $cd.Lat
         $listItem.Longitude = $cd.Long_
-        $output.Add($listItem)
-        Clear-Variable -Name listItem -Force -ErrorAction SilentlyContinue
 
-        # $output.Add([Covid]::new(
-        #         $cd.'Country/Region',
-        #         $cd.'Province/State',
-        #         $cd.'Last Update',
-        #         $cd.Confirmed,
-        #         $cd.Deaths,
-        #         $cd.Recovered,
-        #         $cd.Latitude,
-        #         $cd.Longitude
-        #     )
-        # )
+        $output.Add($listItem)
+
+        Clear-Variable -Name listItem -Force -ErrorAction SilentlyContinue
     }
 
     Write-Output -InputObject $output

@@ -11,7 +11,7 @@ Get-ChildItem -Path $PSScriptRoot\Functions\*.ps1 | Foreach-Object { . $_.FullNa
 
 # Argument completion.
 
-# Try to run this one time so we don't have to run it over and over and over...
+# Running this once on import, I don't like it but we need that sweet sweet tab complete.
 $argData = Get-COVID19Data
 
 $scriptBlock = {
@@ -30,12 +30,5 @@ $scriptBlock = {
 }
 Register-ArgumentCompleter -CommandName Format-Covid19Table -ParameterName ProvinceOrState -ScriptBlock $scriptBlock
 
+# Aliases
 New-Alias -Name Start-Covid19Tracker -Value Format-Covid19Table -Force
-
-# $scriptBlock = {
-#     param($commandName, $parameterName, $stringMatch)
-
-#     $output = $argData | Select-Object -ExpandProperty CountyOrDistrict -Unique | Sort-Object
-#     $output | ForEach-Object {$_}
-# }
-# Register-ArgumentCompleter -CommandName Start-Covid19Tracker -ParameterName CountyOrDistrict -ScriptBlock $scriptBlock
